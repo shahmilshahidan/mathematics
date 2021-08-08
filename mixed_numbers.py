@@ -20,33 +20,27 @@ def mixed_fraction(s):
             # Numerator is negative
             # Improper fraction case
             if numerator < 0 and (abs(numerator) > abs(denominator)):
-                proper_fraction = factoring(abs(numerator), denominator)
-                return mixed_number_format(-proper_fraction[0], proper_fraction[1], proper_fraction[2])
+                improper_fraction(numerator, denominator)
             # Proper fraction case
             elif numerator < 0 and (abs(numerator) < abs(denominator)):
                 # Quotient equals to numerator
                 if numerator // denominator == -1:
-                    pf = simplify(abs(numerator), denominator)
-                    return mixed_number_format(0, -pf[0], pf[1])
+                    proper_frac(numerator, denominator)
                 proper_fraction = factoring(abs(numerator), denominator)
                 return mixed_number_format(proper_fraction[0], -proper_fraction[1] * -1, proper_fraction[2])
             # Denominator is negative
             elif denominator < 0:
                 # Quotient equals to numerator
                 if numerator // denominator == -1:
-                    pf = simplify(numerator, abs(denominator))
-                    return mixed_number_format(0, -pf[0], pf[1])
+                    proper_frac(numerator, denominator)
                 proper_fraction = factoring(numerator, abs(denominator))
                 return mixed_number_format(-proper_fraction[0], proper_fraction[1], proper_fraction[2])
 
 
-def proper_fraction(numerator, denominator):
+def proper_frac(numerator, denominator):
     # Quotient equals to numerator
-    if numerator // denominator == -1:
-        pf = simplify(abs(numerator), denominator)
-        return mixed_number_format(0, -pf[0], pf[1])
-    proper_fraction = factoring(abs(numerator), denominator)
-    return mixed_number_format(proper_fraction[0], -proper_fraction[1] * -1, proper_fraction[2])
+    pf = simplify(abs(numerator), denominator)
+    return mixed_number_format(0, -pf[0], pf[1])
 
 def improper_fraction(numerator, denominator):
     proper_fraction = factoring(abs(numerator), denominator)
