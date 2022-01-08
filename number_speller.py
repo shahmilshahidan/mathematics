@@ -30,9 +30,7 @@ def ones(number):
 
 # Case 2: For two digits(20+) and above
 def ones_mul(number):
-    if number == '0':
-        return ''
-    elif number == '1':
+    if number == '1':
         return 'one'
     elif number == '2':
         return 'two'
@@ -52,54 +50,50 @@ def ones_mul(number):
         return 'nine'
 
 def tens(number):
-    if number[0] == '0':
-        return ''
-    if number[0] != '1':
-        if number[0] == '2':
-            return 'twenty'
-        elif number[0] == '3':
-            return 'thirty'
-        elif number[0] == '4':
-            return 'forty'
-        elif number[0] == '5':
-            return 'fifty'
-        elif number[0] == '6':
-            return 'sixty'
-        elif number[0] == '7':
-            return 'seventy'
-        elif number[0] == '8':
-            return 'eighty'
-        elif number[0] == '9':
-            return 'ninety'
-    else:
-        # If number in ones is 0, set to ten
-        if number[-1] == '0':
-            return 'ten'
-        # Check for teens (11 - 19)
-        if number[-1] == '1':
-            return 'eleven'
-        elif number[-1] == '2':
-            return 'twelve'
-        elif number[-1] == '3':
-            return 'thirteen'
-        elif number[-1] == '4':
-            return 'fourteen'
-        elif number[-1] == '5':
-            return 'fifteen'
-        elif number[-1] == '6':
-            return 'sixteen'
-        elif number[-1] == '7':
-            return 'seventeen'
-        elif number[-1] == '8':
-            return 'eighteen'
-        elif number[-1] == '9':
-            return 'ninteen'
+    if number[0] == '2':
+        return 'twenty'
+    elif number[0] == '3':
+        return 'thirty'
+    elif number[0] == '4':
+        return 'forty'
+    elif number[0] == '5':
+        return 'fifty'
+    elif number[0] == '6':
+        return 'sixty'
+    elif number[0] == '7':
+        return 'seventy'
+    elif number[0] == '8':
+        return 'eighty'
+    elif number[0] == '9':
+        return 'ninety'
+
+def teens(number):
+    # If number in ones is 0, set to ten
+    if number[-1] == '0':
+        return 'ten'
+    # Check for teens (11 - 19)
+    if number[-1] == '1':
+        return 'eleven'
+    elif number[-1] == '2':
+        return 'twelve'
+    elif number[-1] == '3':
+        return 'thirteen'
+    elif number[-1] == '4':
+        return 'fourteen'
+    elif number[-1] == '5':
+        return 'fifteen'
+    elif number[-1] == '6':
+        return 'sixteen'
+    elif number[-1] == '7':
+        return 'seventeen'
+    elif number[-1] == '8':
+        return 'eighteen'
+    elif number[-1] == '9':
+        return 'ninteen'
 
 
 def hundreds(number):
-    if number == '0':
-        return ''
-    elif number == '1':
+    if number == '1':
         return 'one hundred'
     elif number == '2':
         return 'two hundred'
@@ -120,9 +114,7 @@ def hundreds(number):
 
 
 def thousands(number):
-    if number == '0':
-        return 'thousand'
-    elif number == '1':
+    if number == '1':
         return 'one thousand'
     elif number == '2':
         return 'two thousand'
@@ -143,9 +135,7 @@ def thousands(number):
 
 
 def ten_thousands(number):
-    if number == '0':
-        return ''
-    elif number == '1':
+    if number == '1':
         return 'ten'
     elif number == '2':
         return 'twenty'
@@ -177,18 +167,42 @@ def spellNum(n):
                 return word_number
     while num_digits > 1:
         if num_digits == 5:
-            word = ten_thousands(n[-num_digits])
-            word_number += word
+            if n[-num_digits] != '0':
+                word = ten_thousands(n[-num_digits])
+                word_number += word
+                word_number += " "
+            else:
+                pass
         elif num_digits == 4:
-            word = thousands(n[-num_digits])
-            word_number += word
+            if n[-num_digits] != '0':
+                word = thousands(n[-num_digits])
+                word_number += word
+                word_number += " "
+            else:
+                word_number += "thousand"
+                word_number += " "
         elif num_digits == 3:
-            word = hundreds(n[-num_digits])
-            word_number += word
+            if n[-num_digits] != '0':
+                word = hundreds(n[-num_digits])
+                word_number += word
+                word_number += " "
+            else:
+                pass
         elif num_digits == 2:
+            if n[-num_digits] == '0':
+                pass
+            elif n[-num_digits] == '1':
+                word = teens(n[-num_digits:])
+                word_number += word
+                return word_number
             # Double digits case
-            word = tens(n[-num_digits:])
-            word_number += word
+            else:
+                word = tens(n[-num_digits:])
+                word_number += word
+                word_number += " "
         num_digits -= 1
-    word = ones_mul(n[-num_digits])
+    if n[-num_digits] != '0':
+        word = ones_mul(n[-num_digits])
+        word_number += word
+    word_number = word_number.rstrip(' ')
     return word_number
